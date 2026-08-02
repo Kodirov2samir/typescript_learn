@@ -7,3 +7,6 @@ console.log(numExplicit);
 
 // const numTestExplicit: number = "32";
 // console.log(numTestExplicit); //ide imdiately gives an error
+
+//Structural typization
+//Structural typing in TypeScript means that type compatibility is determined solely by the shape or structure of the data, rather than by explicit declarations or type names
