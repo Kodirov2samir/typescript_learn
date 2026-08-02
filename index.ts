@@ -10,3 +10,13 @@ console.log(numExplicit);
 
 //Structural typization
 //Structural typing in TypeScript means that type compatibility is determined solely by the shape or structure of the data, rather than by explicit declarations or type names
+
+//Data types
+//data types in ts are the same as in js but there are special types
+/*Specail types:
+ any
+ unknown
+ never
+ void
+ (literals)
+ */
