@@ -118,5 +118,38 @@ function nevFn(value) {
     }
 }
 // console.log(nevFn(NevVar.Fourth)); 3
-console.log(nevFn(NevVar.Second));
-2;
+console.log(nevFn(NevVar.Second)); //2;
+//Void also like never but it is returned after complition of the function
+function voiFn() {
+    console.log();
+}
+const userComp = {
+    name: "Samir",
+    age: 20,
+    address: {
+        coords: ["20", "21"],
+    },
+};
+console.log(userComp); //{ name: 'Samir', age: 20, address: { coords: [ '20', '21' ] } }
+//if we want a massive of users we can use [] before the object type:
+const userCompArr = [
+    userComp,
+    {
+        name: "Akbar",
+        age: 99,
+        address: {
+            city: "Namangan",
+            coords: ["20", "22"],
+        },
+    },
+];
+console.log(userCompArr); /**
+[
+  { name: 'Samir', age: 20, address: { coords: [Array] } },
+  {
+    name: 'Akbar',
+    age: 99,
+    address: { city: 'Namangan', coords: [Array] }
+  }
+] */
+console.log(userCompArr[1]?.address.coords); //[ '20', '22' ]

@@ -176,5 +176,76 @@ function nevFn(value: NevVar) {
   }
 }
 // console.log(nevFn(NevVar.Fourth)); 3
-console.log(nevFn(NevVar.Second));
-2;
+console.log(nevFn(NevVar.Second)); //2;
+
+//Void also like never but it is returned after complition of the function
+function voiFn(): void {
+  console.log();
+}
+//we mostly use it to say that function wroks with db or somthing and we dont need to return anything:
+/**
+ * function saveUsername(name: string): void {
+  // Просто сохраняем в БД, функция ничего не возвращает
+  db.save(name); 
+}
+ */
+
+/**
+ * // 1. Возвращает конкретное значение (String)
+function getName(): string {
+  return "Алексей"; 
+}
+
+// 2. Ничего не возвращает, но РАБОТАЕТ ДО КОНЦА (Void)
+function logName(): void {
+  console.log("Алексей"); 
+}
+
+// 3. НИКОГДА НЕ ЗАВЕРШАЕТСЯ / падает с ошибкой (Never)
+function fail(): never {
+  throw new Error("Упс!"); 
+}
+ */
+
+//Compound types
+//to create types for objects or arrays we use type or interface
+interface AddressComp {
+  city?: string; //we use "?" before : to say that it is optional
+  street?: string;
+  coords: string[];
+}
+type UserComp = {
+  name: string;
+  age: number;
+  address: AddressComp;
+};
+const userComp: UserComp = {
+  name: "Samir",
+  age: 20,
+  address: {
+    coords: ["20", "21"],
+  },
+};
+console.log(userComp); //{ name: 'Samir', age: 20, address: { coords: [ '20', '21' ] } }
+//if we want a massive of users we can use [] before the object type:
+const userCompArr: UserComp[] = [
+  userComp,
+  {
+    name: "Akbar",
+    age: 99,
+    address: {
+      city: "Namangan",
+      coords: ["20", "22"],
+    },
+  },
+];
+console.log(userCompArr); /**
+[
+  { name: 'Samir', age: 20, address: { coords: [Array] } },
+  {
+    name: 'Akbar',
+    age: 99,
+    address: { city: 'Namangan', coords: [Array] }
+  }
+] */
+console.log(userCompArr[1]?.address.coords); //[ '20', '22' ]
