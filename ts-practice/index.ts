@@ -20,3 +20,50 @@ console.log(numExplicit);
  void
  (literals)
  */
+
+//Union(x | y)
+//Unions are the combination of data types, which means we show what kind of data types we can assign a variable
+let union: number | string; //number or string
+union = "bread";
+union = 20;
+console.log(union); //no error (20)
+
+//Non primitives:
+type MainInfoUnion = {
+  firtsname: string;
+  lastname: string;
+};
+type AdditionalInfoUnion = {
+  age: number;
+};
+type FullinfoUnion = MainInfoUnion | AdditionalInfoUnion;
+let infoUnion1: FullinfoUnion = { age: 20 }; //correct
+let infoUnion2: FullinfoUnion = {
+  age: 17,
+  firtsname: "samir",
+  lastname: "kodirov",
+}; //correct
+let unionInfo3: FullinfoUnion = {
+  firtsname: "samir",
+  age: 20,
+}; //correct
+//So basically we can use any of the fileds of the type
+
+//Intersection(x & y)
+//There cant be intersections in primitive data types:
+let intersection: string & number; //incorrect
+
+//Non primitive
+type MainInfo = {
+  firstname: string;
+  lastname: string;
+};
+type AdditionalInfo = {
+  age: number;
+};
+
+type FullInfo = AdditionalInfo & MainInfo;
+
+const info0: FullInfo = { firstname: "Samir", lastname: "Kodirov", age: 20 };
+console.log(info0); //{ firstname: 'Samir', lastname: 'Kodirov', age: 20 }
+//so it means an object should include all the fields
