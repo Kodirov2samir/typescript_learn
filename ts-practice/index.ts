@@ -108,3 +108,73 @@ const superType: SuperType = subType; //correct because supertype requires to ha
 const subType: SubType = superType;//incorrect because although subType includes name, it laso requires age but there is no age
  */
 console.log(superType);
+
+//Special types:
+//Any=> basially allows to use any type
+let anyVar: any;
+anyVar = "string";
+anyVar = 20;
+anyVar = false;
+anyVar = {};
+anyVar = [];
+//everything is correct
+
+//any is both subType and superType for any data type
+
+//Unknown=> safer version of any, if we dont know the value yet we need to check teh value and then provede type:
+function unk(data: unknown) {
+  let val: string;
+  // val=data => error because we dont know the value, so we need to check first
+  if (typeof data === "string") {
+    val = data; //correct
+  }
+  if (Array.isArray(data)) {
+    data;
+  }
+}
+//unknown is a superType for any data type but no subType, so string can be unknown but unknown can't be string
+let uncVar: unknown;
+uncVar = "string"; //correct
+
+/**
+ let value: unknown;
+ let str: string = value incorrect
+ */
+
+//never is a subType for any data but no superType it means never can be string but string can't be never
+/**
+ * never — это подтип для string (как малюсенькая матрешка внутри большой).
+
+Поэтому ты можешь положить never туда, где ожидается string.
+
+string — это НЕ подтип для never.
+
+Поэтому ты не можешь положить string туда, где ожидается never.
+ */
+let myNever: never = undefined as never;
+let myString: string = myNever; //correct
+/**
+ let str: string = "Hi";
+let nev: never = str; incorrect
+ */
+
+//Example of usage:
+enum NevVar {
+  First,
+  Second,
+  Third,
+}
+function nevFn(value: NevVar) {
+  switch (value) {
+    case NevVar.First:
+      return 1;
+    case NevVar.Second:
+      return 2;
+    default:
+      // const exhaustiveCheck: never = value; //this allows us to make sure that we have made case for each scenario, for example here as we have Third default will return Third
+      return 3;
+  }
+}
+// console.log(nevFn(NevVar.Fourth)); 3
+console.log(nevFn(NevVar.Second));
+2;
