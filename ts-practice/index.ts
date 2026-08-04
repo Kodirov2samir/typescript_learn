@@ -249,3 +249,46 @@ console.log(userCompArr); /**
   }
 ] */
 console.log(userCompArr[1]?.address.coords); //[ '20', '22' ]
+
+//Literals
+//Literals in TypeScript are exact, specific values used as types
+type ColorLit = "green" | "red" | "white";
+const colorLit: ColorLit = "red"; // anything not included in literal will be an error from IDE
+
+type SizeLit = 1 | 2 | 4;
+const sizeLit: SizeLit = 2;
+
+//as ts has structural typing we can also do
+const colLit = "white";
+
+function litFn(
+  color: ColorLit /**we basically say: color should be one of ColorLit literals */,
+) {
+  console.log(color);
+}
+litFn(colLit); //white
+//but
+const sizLit = {
+  size: 4,
+} as const; //assign const to say that we will never change the value or we could assign readonly literaly:
+/**
+ * const sizLit = {
+  readonly size: 4,
+}
+ */
+
+function sizFn(size: SizeLit) {
+  console.log(size);
+}
+// sizFn(sizLit.size); Error
+//error occurs because SizeLit expects only three values: 1,2,4 although size is 4 we can always change its value to 6: sizeLit.size=6, so for that reason ts warns as not to use that instead we can assign it as const
+sizFn(sizLit.size); //4 now correct
+
+//Template Literal Types
+type Event = "click" | "hover";
+type Entity = "user" | "button";
+
+type EventHandler = `on-${Event}-${Entity}`;
+
+let handler: EventHandler = "on-click-user"; // correct
+// let badHandler: EventHandler = "on-scroll-user";  Incorrect
