@@ -292,3 +292,53 @@ type EventHandler = `on-${Event}-${Entity}`;
 
 let handler: EventHandler = "on-click-user"; // correct
 // let badHandler: EventHandler = "on-scroll-user";  Incorrect
+
+//Generics
+//Generics are the arguments but only for types:
+type UserGen = {
+  username: string;
+  age?: 20;
+};
+
+type AddressGen = {
+  coord: number[];
+};
+
+type FullGenInfo<T> = {
+  status?: "true" | "false";
+  requestId: string;
+  data: T; //we basically say: we expect data to be in the form of T(type)
+};
+
+const fullGenInfo: FullGenInfo<UserGen> /**we say: fullGenInfo should be in the form of FullGenInfo and data should be in the form of UserGen */ =
+  {
+    requestId: "13j2bjedb3jbdj4f",
+    data: {
+      username: "samir",
+    },
+  };
+console.log(fullGenInfo); //{ requestId: '13j2bjedb3jbdj4f', data: { username: 'samir' } }
+
+//Generics in function syntax: function name<T>(arg:T(type we give the the argument)): T(type we should return){}
+//in react we need to put ,after generic
+//Extend we need to extend generics to say: we need a geric that includes these types for example:
+type ExtGenCol = "green" | "red" | "purple";
+type ExtGen = {
+  brand_name: string;
+  year?: number;
+  color?: ExtGenCol;
+};
+const ExtGenArrFn = <
+  T extends {
+    brand_name: string;
+    year?: number; /**we say: you can only take generics that have brandname as a string and year as a number */
+  },
+>(
+  item: T,
+): T => {
+  return item;
+};
+
+console.log(
+  ExtGenArrFn<ExtGen>({ brand_name: "BMW", year: 2008, color: "purple" }),
+); //{ brand_name: 'BMW', year: 2008, color: 'purple' }
