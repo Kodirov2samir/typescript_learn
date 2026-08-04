@@ -342,3 +342,7 @@ const ExtGenArrFn = <
 console.log(
   ExtGenArrFn<ExtGen>({ brand_name: "BMW", year: 2008, color: "purple" }),
 ); //{ brand_name: 'BMW', year: 2008, color: 'purple' }
+
+//Generic with conditions
+type isString<T> = T extends string ? true : false;
+const val: isString<"sa"> = true;
