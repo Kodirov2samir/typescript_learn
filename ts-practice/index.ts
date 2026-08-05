@@ -346,3 +346,99 @@ console.log(
 //Generic with conditions
 type isString<T> = T extends string ? true : false;
 const val: isString<"sa"> = true;
+
+//Narrowing
+//Narrowing is just a way for us to use the mesthod type no knowing what it will be, basic:
+const narrFn = (arg: number | null | string) => {
+  if (typeof arg === "string") {
+    return arg + 2;
+  } else if (typeof arg === "number") {
+    return arg + 6;
+  } else {
+    return arg;
+  }
+};
+console.log(narrFn(2)); //8
+console.log(narrFn("2")); //22
+console.log(narrFn(null)); //null
+
+//truthiness narrowing we can do either with literals or null undefined
+/**
+ * How It WorksFalsy values (null, undefined, 0, NaN, "", false) mean the check fails or goes to the else block.Truthy values (everything else) mean the value exists, allowing TypeScript to strip away null and undefined
+ */
+function truthinessNarrF(arg?: string) {
+  if (arg) {
+    console.log(arg.length); //ts knows if is true is it authomatically becaomes string
+  } else {
+    // Inside this block, TypeScript knows 'str' is undefined or falsy
+    console.log("No string provided");
+  }
+}
+// with non primitives:
+type truthNarrNon = {
+  username: string;
+  age: number;
+  address: string;
+};
+
+type PartensTruthNarr = {
+  parent_name: string;
+  parent_age?: number;
+  address: string;
+};
+
+const undentifyNarrFn = (arg: truthNarrNon | PartensTruthNarr) => {
+  //we can use in operator
+  if (
+    "username" in
+    arg /**we basically say if username key in thruthNarrNon exists */
+  ) {
+    console.log(arg.age); //ts understood that username is in pnly truthNarrNon and we can access its values
+  } else if ("parent_age" in arg) {
+    console.log(arg.parent_name);
+  }
+  return arg.address; //we can access it because ts uses structural typixation and both types has address key
+};
+console.log(undentifyNarrFn({ username: "Samir", age: 20, address: "hell" })); //20 hell
+
+//Discriminated unions
+interface MainUnionInt {
+  maxSpeed: number;
+  year?: number;
+}
+
+interface BmwDisc extends MainUnionInt {
+  type: "BMW";
+  bwmChar: string;
+}
+
+interface AudiDisc extends MainUnionInt {
+  type: "Audi";
+  audiChar: string;
+}
+interface ToyotaDisc extends MainUnionInt {
+  type: "Toyota";
+  toyotaChar: string;
+}
+
+type CarDisc = BmwDisc | AudiDisc | ToyotaDisc;
+
+function indentyfyCarDIscUnion(arg: CarDisc) {
+  //discriminated unions can be made either by switch case or if else
+  switch (arg.type) {
+    case "BMW":
+      return arg.bwmChar; //ts understands that it is bmw and we can acess its unique keys
+    case "Audi":
+      return arg.audiChar;
+    default:
+      return arg.toyotaChar; //ts understood that the only option is toyota
+  }
+}
+
+console.log(
+  indentyfyCarDIscUnion({
+    type: "Audi",
+    audiChar: "comfortable",
+    maxSpeed: 200,
+  }),
+); //comfortable
