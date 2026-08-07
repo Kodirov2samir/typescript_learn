@@ -177,4 +177,72 @@ function sizFn(size) {
 //error occurs because SizeLit expects only three values: 1,2,4 although size is 4 we can always change its value to 6: sizeLit.size=6, so for that reason ts warns as not to use that instead we can assign it as const
 sizFn(sizLit.size); //4 now correct
 let handler = "on-click-user"; // correct
-// let badHandler: EventHandler = "on-scroll-user";  Incorrect
+const fullGenInfo /**we say: fullGenInfo should be in the form of FullGenInfo and data should be in the form of UserGen */ = {
+    requestId: "13j2bjedb3jbdj4f",
+    data: {
+        username: "samir",
+    },
+};
+console.log(fullGenInfo); //{ requestId: '13j2bjedb3jbdj4f', data: { username: 'samir' } }
+const ExtGenArrFn = (item) => {
+    return item;
+};
+console.log(ExtGenArrFn({ brand_name: "BMW", year: 2008, color: "purple" })); //{ brand_name: 'BMW', year: 2008, color: 'purple' }
+const val = true;
+//Narrowing
+//Narrowing is just a way for us to use the mesthod type no knowing what it will be, basic:
+const narrFn = (arg) => {
+    if (typeof arg === "string") {
+        return arg + 2;
+    }
+    else if (typeof arg === "number") {
+        return arg + 6;
+    }
+    else {
+        return arg;
+    }
+};
+console.log(narrFn(2)); //8
+console.log(narrFn("2")); //22
+console.log(narrFn(null)); //null
+//truthiness narrowing we can do either with literals or null undefined
+/**
+ * How It WorksFalsy values (null, undefined, 0, NaN, "", false) mean the check fails or goes to the else block.Truthy values (everything else) mean the value exists, allowing TypeScript to strip away null and undefined
+ */
+function truthinessNarrF(arg) {
+    if (arg) {
+        console.log(arg.length); //ts knows if is true is it authomatically becaomes string
+    }
+    else {
+        // Inside this block, TypeScript knows 'str' is undefined or falsy
+        console.log("No string provided");
+    }
+}
+const undentifyNarrFn = (arg) => {
+    //we can use in operator
+    if ("username" in
+        arg /**we basically say if username key in thruthNarrNon exists */) {
+        console.log(arg.age); //ts understood that username is in pnly truthNarrNon and we can access its values
+    }
+    else if ("parent_age" in arg) {
+        console.log(arg.parent_name);
+    }
+    return arg.address; //we can access it because ts uses structural typixation and both types has address key
+};
+console.log(undentifyNarrFn({ username: "Samir", age: 20, address: "hell" })); //20 hell
+function indentyfyCarDIscUnion(arg) {
+    //discriminated unions can be made either by switch case or if else
+    switch (arg.type) {
+        case "BMW":
+            return arg.bwmChar; //ts understands that it is bmw and we can acess its unique keys
+        case "Audi":
+            return arg.audiChar;
+        default:
+            return arg.toyotaChar; //ts understood that the only option is toyota
+    }
+}
+console.log(indentyfyCarDIscUnion({
+    type: "Audi",
+    audiChar: "comfortable",
+    maxSpeed: 200,
+})); //comfortable
