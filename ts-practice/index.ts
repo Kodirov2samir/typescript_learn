@@ -442,3 +442,54 @@ console.log(
     maxSpeed: 200,
   }),
 ); //comfortable
+
+//Type assertion
+// Type Assertion ('as') is used when you know more about a type than TypeScript's compiler can infer.
+// Common use cases:
+// 1. Narrowing DOM elements (e.g., document.getElementById(...) as HTMLInputElement)
+// 2. Overriding TS restrictions (e.g., Object.keys(obj) as Array<keyof T>)
+// 3. Typing unknown/external data (e.g., JSON.parse or API responses)
+// 4. Locking literal values with 'as const'
+// Note: 'as' only affects the compile-time type checks and disappears in runtime JS.
+//if we get an object from backend ts will see it as a random object with random fields because parsing or getting the obj from back is completed at run time, for that we have type assertion:
+type AssertObj = {
+  name: string;
+  age: number;
+  why: string;
+};
+
+const assertObjBack = {
+  name: "Samir",
+  age: 20,
+} as AssertObj;
+//if we want the object to be like Assert object we can write as
+//but it has some bugs, when some fields are added ts just ignores it
+//or we can do
+// const asserObjBack2 = <AssertObj>{
+//   name: "samir",
+//   age: 20,
+//   why: "20",
+// };
+//satisfies is the same as "as" but it only checks if structuraly the object is correct
+
+//it is better to use apparetn annotation:
+const asserObjBack2: AssertObj = {
+  name: "samir",
+  age: 20,
+  why: "20",
+};
+//while parsing we can create a "helper"
+function parseJson<T>(arg: string): T {
+  return JSON.parse(arg) as T;
+}
+const itemParsed = parseJson<AssertObj>(
+  '{"name": "Samir", "age": 25, "why": "because"}',
+);
+console.log(itemParsed); //{ name: 'Samir', age: 25, why: 'because' }
+
+//as we know object.keys when hovered to the value returns a string of array, but if we want to see what is inside we can use
+const objKey = <T extends object>(obj: T): Array<keyof T> => {
+  return Object.keys(obj) as Array<keyof T>;
+};
+
+const objKeyCorrect = objKey(asserObjBack2); //now we see what is the value
