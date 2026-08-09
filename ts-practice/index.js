@@ -246,3 +246,34 @@ console.log(indentyfyCarDIscUnion({
     audiChar: "comfortable",
     maxSpeed: 200,
 })); //comfortable
+const assertObjBack = {
+    name: "Samir",
+    age: 20,
+};
+//if we want the object to be like Assert object we can write as
+//but it has some bugs, when some fields are added ts just ignores it
+//or we can do
+// const asserObjBack2 = <AssertObj>{
+//   name: "samir",
+//   age: 20,
+//   why: "20",
+// };
+//satisfies is the same as "as" but it only checks if structuraly the object is correct
+//it is better to use apparetn annotation:
+const asserObjBack2 = {
+    name: "samir",
+    age: 20,
+    why: "20",
+};
+//while parsing we can create a "helper"
+function parseJson(arg) {
+    return JSON.parse(arg);
+}
+const itemParsed = parseJson('{"name": "Samir", "age": 25, "why": "because"}');
+console.log(itemParsed); //{ name: 'Samir', age: 25, why: 'because' }
+//as we know object.keys when hovered to the value returns a string of array, but if we want to see what is inside we can use
+const objKey = (obj) => {
+    return Object.keys(obj);
+};
+const objKeyCorrect = objKey(asserObjBack2); //now we see what is the value
+//Using type assertion is actually prohoibted in production

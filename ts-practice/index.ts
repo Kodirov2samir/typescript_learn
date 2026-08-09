@@ -493,5 +493,9 @@ const objKey = <T extends object>(obj: T): Array<keyof T> => {
 };
 
 const objKeyCorrect = objKey(asserObjBack2); //now we see what is the value
+//Using type assertion is actually prohoibted in production
 
-//hello i am from test
+//type: object is better that {}, because {} takes everyting instead of null while object is what we need
+type valCurl = {};
+const vsd: valCurl = ""; //no error
+// const vsd1:object = ""//error
