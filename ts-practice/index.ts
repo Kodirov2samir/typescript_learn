@@ -499,3 +499,77 @@ const objKeyCorrect = objKey(asserObjBack2); //now we see what is the value
 type valCurl = {};
 const vsd: valCurl = ""; //no error
 // const vsd1:object = ""//error
+
+//Typeof/KeyOf
+//typeof can work as a basic typeof in js
+console.log(typeof "name"); //string
+//But we can alsi use it in a speaial way:
+//if we have an object which will be a template for other objeects instead of creating a type or interface  again we can use typeof
+
+const objTpOf = {
+  name: "Samir",
+  age: 20,
+  location: ["one", 1],
+};
+type ObjTpOfTy = typeof objTpOf; /**instead of:
+type ObjTpOfTy: {
+name:string,
+age:num,
+location:(string | number)[]
+}
+*/
+//it also works with primitives while giving literals
+const colorTy = "red";
+
+type ColorTy = typeof colorTy | "green";
+//but it works only if colorTy is a constand variable because we can change let value can be anything
+
+//we can use it woth function also for example:
+type CardTy = {
+  name: string;
+  created: Date;
+  price: number;
+  percent: number;
+};
+type CardTyFull = {
+  data: CardTy;
+  discount_price: number;
+};
+const calculateDiscount = (num: number, percent: number): number => {
+  const per = percent / 100;
+  return per * num;
+};
+//so if we want this to work inside of another function:
+const cardShow = <T extends { price: number; percent: number }, K>(
+  item: T,
+  discount: typeof calculateDiscount /**we writen it instead of (num: number, percent: number): number*/,
+  builder: (item: T, discount: number) => K,
+): K => {
+  const discountAmount = discount(item.price, item.percent);
+  return builder(item, discountAmount);
+};
+
+const useCardShow = cardShow<CardTy, CardTyFull>(
+  {
+    name: "Samir",
+    created: new Date("2009-05-15"),
+    price: 200,
+    percent: 20,
+  },
+  calculateDiscount,
+  (item, discountAmount) => ({
+    data: item,
+    discount_price: discountAmount,
+  }),
+);
+console.log(useCardShow); /**
+{
+  data: {
+    name: 'Samir',
+    created: 2009-05-15T00:00:00.000Z,
+    price: 200,
+    percent: 20
+  },
+  discount_price: 40
+}
+*/
