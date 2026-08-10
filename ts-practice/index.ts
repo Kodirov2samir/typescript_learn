@@ -573,3 +573,37 @@ console.log(useCardShow); /**
   discount_price: 40
 }
 */
+//there is also ReturnType<typeof function> it is used to get the type of a returned value:
+// It gives you a Single Source of Truth. If you update what the function returns, the types update across your app automatically.
+
+// Example
+//  Without ReturnType (Manual & Redundant)
+/**
+ * 
+ function getUserRet() {
+  return { id: 1, name: "Samir", isOnline: true };
+}
+
+// You have to write this type by hand and manually update it later:
+type UserRet = {
+  id: number;
+  name: string;
+  isOnline: boolean;
+};
+
+function displayUserRet(user: User) {}
+ */
+function getUserRet() {
+  return { id: 1, name: "Samir", isOnline: true };
+}
+
+// TypeScript inspects `getUser` and creates the type for you:
+type UserRet = ReturnType<typeof getUserRet>;
+
+function displayUser(user: UserRet) {
+  console.log(user.name);
+}
+// Most Common Use Cases
+// React Custom Hooks: Extracting return types of useAuth(), useForm(), etc.
+
+// Third-party Libraries: Getting types for client objects when the library author forgot to export the type interface.
