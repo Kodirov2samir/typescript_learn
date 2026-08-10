@@ -607,3 +607,15 @@ function displayUser(user: UserRet) {
 // React Custom Hooks: Extracting return types of useAuth(), useForm(), etc.
 
 // Third-party Libraries: Getting types for client objects when the library author forgot to export the type interface.
+
+//keyof basically takes the key of an object
+const objKey1 = {
+  name: "samir",
+  age: 20,
+};
+function getKeyOf<T, K extends keyof T>(item: T, key: K): T[K] {
+  return item[key];
+}
+
+// getKeyOf(objKey1, "ham");error
+getKeyOf(objKey1, "name"); //no error
