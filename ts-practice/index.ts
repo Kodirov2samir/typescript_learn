@@ -619,3 +619,26 @@ function getKeyOf<T, K extends keyof T>(item: T, key: K): T[K] {
 
 // getKeyOf(objKey1, "ham");error
 getKeyOf(objKey1, "name"); //no error
+
+//optional chaining opearator is the same as in js
+//not null assertion is used when we are sure that the key will be true(better not to use in production)
+type objOpt = {
+  name: string;
+  personal_information?: {
+    phone: string;
+  };
+  getAge?: () => number;
+  getArray?: string | number[];
+};
+
+function getItemsObjOpt(obj: objOpt) {
+  // obj.personal_information.phone error because phone may not exist
+  console.log(obj.personal_information?.phone); //undefined but not an error
+  //while getting methods or array we do this:
+  console.log(obj.getArray?.[0]); //we are puttin ?. after we called the array
+  console.log(obj.getAge?.()); //again putting after we called a function
+  // console.log(obj.personal_information!.phone);//ts doesnt show error although phone is not given in argument nad it can be optional
+}
+getItemsObjOpt({
+  name: "Samir",
+});
