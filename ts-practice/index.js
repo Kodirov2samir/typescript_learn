@@ -276,4 +276,95 @@ const objKey = (obj) => {
     return Object.keys(obj);
 };
 const objKeyCorrect = objKey(asserObjBack2); //now we see what is the value
-//Using type assertion is actually prohoibted in production
+const vsd = ""; //no error
+// const vsd1:object = ""//error
+//Typeof/KeyOf
+//typeof can work as a basic typeof in js
+console.log(typeof "name"); //string
+//But we can alsi use it in a speaial way:
+//if we have an object which will be a template for other objeects instead of creating a type or interface  again we can use typeof
+const objTpOf = {
+    name: "Samir",
+    age: 20,
+    location: ["one", 1],
+};
+//it also works with primitives while giving literals
+const colorTy = "red";
+const calculateDiscount = (num, percent) => {
+    const per = percent / 100;
+    return per * num;
+};
+//so if we want this to work inside of another function:
+const cardShow = (item, discount /**we writen it instead of (num: number, percent: number): number*/, builder) => {
+    const discountAmount = discount(item.price, item.percent);
+    return builder(item, discountAmount);
+};
+const useCardShow = cardShow({
+    name: "Samir",
+    created: new Date("2009-05-15"),
+    price: 200,
+    percent: 20,
+}, calculateDiscount, (item, discountAmount) => ({
+    data: item,
+    discount_price: discountAmount,
+}));
+console.log(useCardShow); /**
+{
+  data: {
+    name: 'Samir',
+    created: 2009-05-15T00:00:00.000Z,
+    price: 200,
+    percent: 20
+  },
+  discount_price: 40
+}
+*/
+//there is also ReturnType<typeof function> it is used to get the type of a returned value:
+// It gives you a Single Source of Truth. If you update what the function returns, the types update across your app automatically.
+// Example
+//  Without ReturnType (Manual & Redundant)
+/**
+ *
+ function getUserRet() {
+  return { id: 1, name: "Samir", isOnline: true };
+}
+
+// You have to write this type by hand and manually update it later:
+type UserRet = {
+  id: number;
+  name: string;
+  isOnline: boolean;
+};
+
+function displayUserRet(user: User) {}
+ */
+function getUserRet() {
+    return { id: 1, name: "Samir", isOnline: true };
+}
+function displayUser(user) {
+    console.log(user.name);
+}
+// Most Common Use Cases
+// React Custom Hooks: Extracting return types of useAuth(), useForm(), etc.
+// Third-party Libraries: Getting types for client objects when the library author forgot to export the type interface.
+//keyof basically takes the key of an object
+const objKey1 = {
+    name: "samir",
+    age: 20,
+};
+function getKeyOf(item, key) {
+    return item[key];
+}
+// getKeyOf(objKey1, "ham");error
+getKeyOf(objKey1, "name"); //no error
+function getItemsObjOpt(obj) {
+    // obj.personal_information.phone error because phone may not exist
+    console.log(obj.personal_information?.phone); //undefined but not an error
+    //while getting methods or array we do this:
+    console.log(obj.getArray?.[0]); //we are puttin ?. after we called the array
+    console.log(obj.getAge?.()); //again putting after we called a function
+    // console.log(obj.personal_information!.phone);//ts doesnt show error although phone is not given in argument nad it can be optional
+}
+getItemsObjOpt({
+    name: "Samir",
+});

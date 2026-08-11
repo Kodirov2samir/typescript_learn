@@ -642,3 +642,94 @@ function getItemsObjOpt(obj: objOpt) {
 getItemsObjOpt({
   name: "Samir",
 });
+
+//Enum
+//actually we could use objects instead of enums
+const ColorsCon = {
+  Red: "red",
+  Green: "green",
+  Blue: "blue",
+};
+const chosenColorCon = ColorsCon.Blue; //correct but if we want to give it as a parameter to a function it will be error
+// function getColoCon(color: ColorCon){ //error
+
+// }
+//so for that reason we have enum
+enum ColorEn {
+  Red = "red",
+  Blue = "blue",
+  Green = "green",
+  // When it comes to numbers as a value if the value is 5 the next in default will become 6
+  num = 5,
+  nextNum, //6 in default
+}
+function getColorEn(color: ColorEn) {
+  console.log(color); //blue
+}
+getColorEn(ColorEn.Blue);
+
+//we can alos get enum by value
+console.log(ColorEn[5]); //num
+
+//it is better to use union or as const instead of enum
+/**
+ * No extra code: Unions are erased when your code turns into JavaScript. Enums leave behind real objects in your final files.Easy API work: Unions match regular strings and numbers from APIs or databases without needing conversion.Better flexibility: You can make a union out of any literal values or other types very easily.
+ */
+
+//Constant enum
+//constant enum when compiled to js makes less code than regular one
+//it is the same as enum but we cant get enum by value, we cant use constant enum as an object(we cant iterate), and we cant make dynamic value, such as Math.random()
+
+//we can fully get rid of enums with this construction:
+const ClubsObj = {
+  Spain: "Barcelona",
+  Italy: "Inter",
+  Germany: "Bayern",
+  England: "Liverpool",
+  France: "PSG",
+} as const;
+
+type ClubsTp = (typeof ClubsObj)[keyof typeof ClubsObj]; //works the same as enum but with less js code
+
+//although ts has a structiral typization to enum it is not applied
+
+/**
+ * 
+ * type User1 = {
+    name:string,
+    age:number
+}
+type User2 = {
+    name:string,
+    age:number
+}
+
+const fun = (item:User2)=>{
+console.log(item)
+}
+
+const lol:User1 = {
+    name:"Samir",
+    age:20
+} 
+fun(lol)
+
+
+
+
+enum Col1{
+    Red="red",
+    Blue= "blue"
+}
+enum Col2{
+    Red="red",
+    Blue= "blue"
+}
+
+const fun1 = (item:Col1){
+    console.log(item)
+}
+
+const item1 = Col2.Red
+fun1(item1)//error
+ */
