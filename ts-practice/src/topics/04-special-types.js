@@ -1,3 +1,8 @@
+// Topic: Special Types: any, unknown, never, and void
+// `any` removes type safety.
+// `unknown` keeps type safety until you check the value.
+// `never` means a value should be impossible.
+// `void` means a function returns no useful value.
 var ExhaustiveStatus;
 (function (ExhaustiveStatus) {
     ExhaustiveStatus[ExhaustiveStatus["First"] = 0] = "First";

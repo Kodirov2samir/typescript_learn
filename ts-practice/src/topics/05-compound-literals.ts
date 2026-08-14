@@ -1,3 +1,8 @@
+// Topic: Compound Types, Literal Types, and Template Literal Types
+// Compound types describe objects and arrays.
+// Literal types allow only exact values like "red" or 2.
+// Template literal types build valid strings from smaller literal unions.
+
 interface Address {
   city?: string;
   street?: string;

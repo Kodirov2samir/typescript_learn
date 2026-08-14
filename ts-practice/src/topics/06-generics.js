@@ -1,3 +1,7 @@
+// Topic: Generics and Conditional Types
+// Generics are type parameters.
+// They let you keep type safety while reusing the same type or function.
+// Conditional types choose one type or another using `extends`.
 export function runGenericExamples() {
     // Generics are type parameters.
     // They let one type or function work with many different data shapes.

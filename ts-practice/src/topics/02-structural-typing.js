@@ -1,3 +1,6 @@
+// Topic: Structural Typing
+// TypeScript compares types by shape, not by type name.
+// If an object has the required properties, it can be used as that type.
 export function runStructuralTypingExamples() {
     // TypeScript uses structural typing.
     // If two values have the required shape, their type names do not need to match.

@@ -1,3 +1,7 @@
+// Topic: Structural Typing
+// TypeScript compares types by shape, not by type name.
+// If an object has the required properties, it can be used as that type.
+
 interface User {
   id: string;
   name: string;

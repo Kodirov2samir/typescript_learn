@@ -1,71 +1,86 @@
-//types are used to create literals and primitives
-type Literal = "red" | "green";
-type Primitive = number[];
-//it is impossible to do that with interface
+// Topic: Interface vs Type
+// Both `interface` and `type` can describe object shapes.
+// Use `interface` often for object models that may be extended.
+// Use `type` for unions, primitives, tuples, and function aliases.
 
-//to combine two interface we use extends
+type ColorLiteral = "red" | "green";
+type NumberList = number[];
+
 interface User {
   name: string;
   age: number;
 }
 
+// Interfaces extend other interfaces with `extends`.
 interface UserInformation extends User {
-  phone_number: string;
+  phoneNumber: string;
 }
 
-const fullUserInformation: UserInformation = {
-  name: "Samir",
-  age: 20,
-  phone_number: "93659633",
-};
-
-//while in type we use intersection to do that
 type Admin = {
   name: string;
   age: number;
 };
 
+// Types combine object shapes with intersection (`&`).
 type AdminFullInfo = Admin & {
-  phone_number: string;
-};
-const fullAdminInfromation: AdminFullInfo = {
-  name: "Alex",
-  age: 23,
-  phone_number: "9239243",
+  phoneNumber: string;
 };
 
-//extends works faster than intersection so it is prefered to use interface in this situation
-
-//Also interfaces can have the same name, if they have they will be combined
-interface OriginalInterface {
+// Interfaces with the same name are merged by TypeScript.
+interface MergedInterface {
   hobbies: string[];
 }
 
-interface OriginalInterface {
-  amount_of_family_members: number;
+interface MergedInterface {
+  familyMembersCount: number;
 }
-/*Ide shows us 
-interface OriginalInterface {
-    hobbies: string[];
-    amount_of_family_members: number;
+
+type FixedTuple = [string, number, 5];
+type CombineFn = (a: number, b: string) => string;
+
+interface InterfaceFunction {
+  (a: number, b: string): string;
 }
-*/
 
-//we also use types to create a tupple, tupples are arrays with teh fixed length and structure inside
-type Tupple = [string, number, 5];
-const tupple: Tupple = ["man", 20, 5];
+export function runInterfaceVsTypeExamples() {
+  console.log("\nTopic 10: Interface vs type");
 
-//It is also prefered to use type over interface while creating functions
-//*Reminder we create type functions not to repeat the code, and we can use it as an argument in function
+  // Types can represent literal unions and primitive aliases.
+  const color: ColorLiteral = "red";
+  const numbers: NumberList = [1, 2, 3];
+  console.log("Type aliases:", color, numbers);
 
-type FnType = (a: number, b: string) => string;
-const combineStringToANumber: FnType = (a, b) => {
-  return a + b;
-};
-// console.log(combineStringToANumber(12,300));will be error
-console.log(combineStringToANumber(12, "hello")); //12hello
+  const fullUserInformation: UserInformation = {
+    name: "Samir",
+    age: 20,
+    phoneNumber: "93659633",
+  };
+  console.log("Interface extends:", fullUserInformation);
 
-//in interface it would look much bigger:
-interface FnInt {
-  (a: number, b: string): number;
+  const fullAdminInformation: AdminFullInfo = {
+    name: "Alex",
+    age: 23,
+    phoneNumber: "9239243",
+  };
+  console.log("Type intersection:", fullAdminInformation);
+
+  const merged: MergedInterface = {
+    hobbies: ["coding", "football"],
+    familyMembersCount: 4,
+  };
+  console.log("Interface merging:", merged);
+
+  // Tuples are arrays with fixed length and fixed positions.
+  const tuple: FixedTuple = ["man", 20, 5];
+  console.log("Tuple:", tuple);
+
+  const combineStringToNumber: CombineFn = (a, b) => {
+    return a + b;
+  };
+  console.log("Function type alias:", combineStringToNumber(12, "hello"));
+
+  const interfaceFunction: InterfaceFunction = (a, b) => {
+    return `${a}-${b}`;
+  };
+  console.log("Interface function:", interfaceFunction(12, "hello"));
 }

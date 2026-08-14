@@ -1,3 +1,6 @@
+// Topic: Enums and `as const` Objects
+// Enums create real JavaScript objects.
+// Literal unions and `as const` objects are often lighter alternatives.
 const ColorsObject = {
     Red: "red",
     Green: "green",
@@ -19,6 +22,7 @@ const ClubsObject = {
     France: "PSG",
 };
 export function runEnumExamples() {
+    console.log("\nTopic 09: Enums");
     console.log("Object as const color:", ColorsObject.Blue);
     printEnumColor(ColorEnum.Blue);
     // Numeric enums support reverse lookup.

@@ -1,3 +1,8 @@
+// Topic: Generics and Conditional Types
+// Generics are type parameters.
+// They let you keep type safety while reusing the same type or function.
+// Conditional types choose one type or another using `extends`.
+
 type UserResponseData = {
   username: string;
   age?: number;

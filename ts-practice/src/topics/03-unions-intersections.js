@@ -1,3 +1,6 @@
+// Topic: Union and Intersection Types
+// Union (`A | B`) means "one of these shapes".
+// Intersection (`A & B`) means "all of these shapes together".
 export function runUnionsAndIntersectionsExamples() {
     // Union (`A | B`) means the value can match A, B, or a compatible combination.
     let unionValue;

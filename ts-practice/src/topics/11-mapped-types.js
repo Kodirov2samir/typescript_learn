@@ -1,24 +1,24 @@
-const mappedUser = {
-    name: "Samir",
-    //age is optionl
-};
-console.log(mappedUser); //{name:"Samir"}
-const mappedMOdifiedUser = {
-    name: "Samir",
-    age: 20, //age is required
-};
-const array = ["123", "123"]; //we cant take values in array oter that string
-//it works because on default all the arrays have keys(index) amd looks like this:
-/**
- const arrayAsObject = {
-  0: "apple",
-  1: "banana"
-};
- */
-//if the key was string we would create an object instead of array
-console.log(array); //["123", "123"]
-const withoutnameCar = {
-    year: 2025,
-    //no name
-};
-export {};
+// Topic: Mapped Types
+// Mapped types create a new type by looping over the keys of another type.
+// They are useful for making every field readonly, optional, required, or transformed.
+export function runMappedTypesExamples() {
+    console.log("\nTopic 11: Mapped types");
+    const mappedUser = {
+        name: "Samir",
+        // `age` is optional here.
+    };
+    console.log("Readonly + optional mapped type:", mappedUser);
+    const requiredMutableUser = {
+        name: "Samir",
+        age: 20,
+    };
+    requiredMutableUser.name = "Akbar";
+    console.log("Required + mutable mapped type:", requiredMutableUser);
+    const arrayLike = ["123", "456"];
+    console.log("Array-like mapped type:", arrayLike);
+    const carWithoutName = {
+        year: 2025,
+        // `name` is removed from this type.
+    };
+    console.log("Key remapping with Exclude:", carWithoutName);
+}

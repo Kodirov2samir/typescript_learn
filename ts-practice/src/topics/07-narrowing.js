@@ -1,3 +1,6 @@
+// Topic: Narrowing and Discriminated Unions
+// Narrowing means checking a value so TypeScript knows its exact type.
+// Common tools are `typeof`, truthiness checks, the `in` operator, and switch statements.
 export function runNarrowingExamples() {
     // Narrowing means checking a value so TypeScript can understand the exact type.
     console.log("Narrow number:", narrowPrimitive(2));

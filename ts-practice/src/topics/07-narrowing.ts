@@ -1,3 +1,7 @@
+// Topic: Narrowing and Discriminated Unions
+// Narrowing means checking a value so TypeScript knows its exact type.
+// Common tools are `typeof`, truthiness checks, the `in` operator, and switch statements.
+
 type PersonWithUsername = {
   username: string;
   age: number;

@@ -1,3 +1,7 @@
+// Topic: Union and Intersection Types
+// Union (`A | B`) means "one of these shapes".
+// Intersection (`A & B`) means "all of these shapes together".
+
 type MainInfoUnion = {
   firstname: string;
   lastname: string;

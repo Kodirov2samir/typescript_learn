@@ -1,3 +1,7 @@
+// Topic: Compound Types, Literal Types, and Template Literal Types
+// Compound types describe objects and arrays.
+// Literal types allow only exact values like "red" or 2.
+// Template literal types build valid strings from smaller literal unions.
 export function runCompoundAndLiteralExamples() {
     // Use `type` or `interface` to describe objects.
     // `?` marks an optional property.
