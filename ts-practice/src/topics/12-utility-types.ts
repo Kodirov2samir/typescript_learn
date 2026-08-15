@@ -82,3 +82,51 @@ type excluded = Exclude<ExtrCl, "yellow" | "red">; //takes all the types that ar
 type t0 = NonNullable<string | number | undefined>; //string | number
 
 type T1 = NonNullable<string[] | null | undefined>; //string[]
+
+//ReturnType<type> retuns a type of a function
+function fnReturn<T extends { name: string; age: number }>(
+  item: T,
+): { name: string; age: number } {
+  return {
+    name: item.name,
+    age: item.age,
+  };
+}
+type returnedValFromFunction = ReturnType<typeof fnReturn>;
+const objFn: returnedValFromFunction = {
+  name: "samir",
+  age: 20,
+};
+
+//Parameters<Type> creates tuples from function parameters
+const Params = function (name: string, size: string[]) {
+  return;
+};
+type ParamsFn = Parameters<typeof Params>; //[name: string, size: string[]]
+
+//ConstructParameters<type> creates tuples from class constructors
+class UserTup {
+  constructor(
+    public name: string,
+    public age: number,
+  ) {}
+}
+type UserParams = ConstructorParameters<typeof UserTup>;
+
+// Use the extracted tuple type in a factory function
+function createUser(...args: UserParams): UserTup {
+  return new UserTup(...args);
+}
+
+const userInstance = createUser("Alice", 30);
+
+/**
+ * Intrinsic String Manipulation Types
+Uppercase<StringType>fully uppercase
+Lowercase<StringType>fully lowercase
+Capitalize<StringType>first letter uppercase
+Uncapitalize<StringType>first letter lowercase
+To help with string manipulation around template string literals, TypeScript includes a set of types which can be used in string manipulation within the type system
+ */
+type LowtoUp = "tomato";
+const lowToUp: Uppercase<LowtoUp> = "TOMATO"; //tomato will be an erorr
