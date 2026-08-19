@@ -1,4 +1,7 @@
-//infer is used to extract the type out of array, obj, promise, tupple, function argumnet:
+// The `infer` keyword lets a conditional type capture part of another type.
+// It is commonly used to extract an array element, promise value, tuple item,
+// or function parameter. The generic function below uses regular type inference,
+// but it does not use the `infer` keyword yet.
 interface User {
   name: string;
   age: number;
@@ -25,17 +28,19 @@ const userItem = inferTestNameAge<User>({
 
 console.log(userItem); //{ name: 'SAMIR', age: 30, location: [ 'Namangan', 'Uzbekistan' ] }
 
-//now to get the argument type we can do:
-type Myparameter<T> = T extends (arg: infer U) => any ? U : never; //it tells if T is a function extract the arguemt type and assign this type as U or never
+// To extract a function's first parameter, describe the function shape and
+// capture its parameter type as `U`. If `T` is not a matching function, return
+// `never` because there is no parameter type to extract.
+type Myparameter<T> = T extends (arg: infer U) => any ? U : never;
 
 type InfType = Myparameter<typeof inferTestNameAge<User>>;
-//now InfType is equal to User
+// `InfType` is now the same as `User`.
 const item: InfType = {
   name: "samir",
   age: 20,
   location: ["defdw"],
 };
-//basically it is Parameter type we could also do:
+// TypeScript's built-in `Parameters` utility performs the same extraction.
 type paramOfFunction = Parameters<typeof inferTestNameAge>[0];
 const paraOfFnObj: paramOfFunction = {
   name: "samie",
